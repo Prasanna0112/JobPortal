@@ -1,39 +1,60 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Label } from "./ui/label";
+import { useDispatch } from "react-redux";
+import { setSearchedQuery } from "@/redux/jobSlice";
 
 const filterData = [
+  {
+    filterType: "Industry",
+    array: [
+      "Frontend Developer",
+      "Backend Developer",
+      "Fullstack Developer",
+      "Data Science",
+      "Machine Learning",
+    ],
+  },
   {
     filterType: "Location",
     array: ["Dehli NCR", "Banglore", "Hyderabad", "Pune", "Mumbai"],
   },
   {
-    filterType: "Industry",
-    array: ["Frontend Developer", "Backend Developer", "Fullstack Developer", "Data Science", "Machine Learning"],
+    filterType: "Company",
+    array: ["Google", "Microsoft", "Amazon", "Meta", "Apple"],
   },
-  {
-    filterType: "Salary",
-    array: ["2-5LPA", "5-10LPA", "10-15LPA", "15-20LPA", "20-25LPA"],
-  }
 ];
 
 const FilterCard = () => {
+  const [selectedValue, setSelectedValue] = useState("");
+  const dispatch = useDispatch();
+
+  const changeHandler = (value) => {
+    setSelectedValue(value);
+  };
+
+  useEffect(() => {
+    dispatch(setSearchedQuery(selectedValue));
+  }, [selectedValue]);
+
   return (
     <div className="w-full bg-white p-3 rounded-md">
       <h1 className="font-bold text-lg">Filter Jobs</h1>
       <hr className="mt-3" />
-      <RadioGroup>
+      <RadioGroup onValueChange={changeHandler} value={selectedValue}>
         {filterData.map((filter, index) => (
           <div key={index}>
             <h1 className="text-lg font-bold">{filter.filterType}</h1>
-           
-              {filter.array.map((item, index) => (
-                <div key={index} className="flex items-center space-x-2 my-2">
-                  <RadioGroupItem id={item} value={item} />
-                  <Label htmlFor={item}>{item}</Label>
+
+            {filter.array.map((item, idx) => {
+              const itemId = `id${index} - ${idx}`;
+              return (
+                <div key={itemId} className="flex items-center space-x-2 my-2">
+                  <RadioGroupItem id={itemId} value={item} />
+                  <Label htmlFor={itemId}>{item}</Label>
                 </div>
-              ))}
-            
+              );
+            })}
           </div>
         ))}
       </RadioGroup>

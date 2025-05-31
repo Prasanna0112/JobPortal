@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../shared/Navbar";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
@@ -23,7 +23,7 @@ const Signup = () => {
   });
 
   const dispatch = useDispatch();
-  const {loading} = useSelector(store=> store.auth);
+  const {loading, user} = useSelector(store=> store.auth);
   const navigate = useNavigate();
 
   const changeEventHandler = (e) => {
@@ -43,7 +43,7 @@ const Signup = () => {
     formData.append("phoneNumber", input.phoneNumber);
     formData.append("role", input.role);
     if (input.file) {
-      formData.append("file", input.file);
+      formData.append("file", input.file);  
     }
     try {
       dispatch(setLoading(true));
@@ -64,6 +64,12 @@ const Signup = () => {
       dispatch(setLoading(false));
     }
   };
+
+  useEffect(() => {
+    if(user) {
+      navigate("/");
+    }
+  }, [])
 
   return (
     <div>
