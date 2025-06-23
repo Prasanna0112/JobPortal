@@ -17,8 +17,8 @@ const category = [
   "Full Stack Developer",
   "Data Science",
   "Cyber Security",
+  "Machine Learning",
   "Graphic Designer",
-  "Product Designer",
   "UI/UX Designer",
   "Software Engineer",
 ];

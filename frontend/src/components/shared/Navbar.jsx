@@ -91,7 +91,7 @@ const Navbar = () => {
                 <button>
                   <Avatar className="cursor-pointer">
                     <AvatarImage
-                      src={user?.profile?.profilePhoto}
+                      src={user?.profile?.profilePhoto || "https://www.pngmart.com/files/23/Profile-PNG-Photo.png"}
                       alt="@shadcn"
                     />
                   </Avatar>
@@ -102,7 +102,7 @@ const Navbar = () => {
                   <div className="flex gap-3 items-center">
                     <Avatar className="cursor-pointer">
                       <AvatarImage
-                        src={user?.profile?.profilePhoto}
+                        src={user?.profile?.profilePhoto || "https://www.pngmart.com/files/23/Profile-PNG-Photo.png"} 
                         alt="@shadcn"
                       />
                     </Avatar>

@@ -22,8 +22,11 @@ const ApplicantsTable = () => {
   const statusHandler = async (status, id) => {
     try {
       axios.defaults.withCredentials = true;
-      const res = await axios.post(`${APPLICATION_API_END_POINT}/status/${id}/update`, {status});
-      if(res.data.success) {
+      const res = await axios.post(
+        `${APPLICATION_API_END_POINT}/status/${id}/update`,
+        { status }
+      );
+      if (res.data.success) {
         toast.success(res.data.message);
       }
     } catch (error) {
@@ -55,26 +58,38 @@ const ApplicantsTable = () => {
                 <TableCell>
                   {item?.applicant?.profile?.resume ? (
                     <a
-                      className="text-blue-600 cursor-pointer"
-                      href={item?.applicant?.profile?.resume}
-                      target="blank"
+                      className="text-blue-600 cursor-pointer hover:underline"
+                      href={`https://docs.google.com/viewer?url=${encodeURIComponent(
+                        item.applicant.profile.resume
+                      )}&embedded=true`}
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
-                      {item?.applicant?.profile?.resumeOriginalName}
+                      {/* {item.applicant.profile.resumeOriginalName ||
+                        "View Resume"} */}
+                        View Resume
                     </a>
                   ) : (
-                    <Span>NA</Span>
+                    <span>NA</span>
                   )}
                 </TableCell>
-                <TableCell>{item?.applicant.createdAt.split("T")[0]}</TableCell>
+
+                <TableCell>
+                  {item?.applicant?.createdAt.split("T")[0]}
+                </TableCell>
                 <TableCell className="text-right">
                   <Popover>
                     <PopoverTrigger>
                       <MoreHorizontal />
                     </PopoverTrigger>
-                    <PopoverContent className="w-30">
+                    <PopoverContent className="w-30 bg-white hover:cursor-pointer">
                       {shortListingStatus.map((status, index) => {
                         return (
-                          <div onClick={()=>statusHandler(status, item._id)} key={index}>
+                          <div
+                            className="hover:bg-gray-100"
+                            onClick={() => statusHandler(status, item._id)}
+                            key={index}
+                          >
                             <span>{status}</span>
                           </div>
                         );

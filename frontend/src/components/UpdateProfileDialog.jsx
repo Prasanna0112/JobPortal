@@ -49,7 +49,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     formData.append("phoneNumber", input.phoneNumber);
     formData.append("bio", input.bio);
     formData.append("skills", input.skills);
-    if (input.file) {
+    if (input.file && input.file instanceof File) {
       formData.append("file", input.file);
     }
 
@@ -82,9 +82,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
   return (
     <div>
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent
-          className="bg-white sm:max-w-[425px]"
-        >
+        <DialogContent className="bg-white sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Update Profile</DialogTitle>
             <DialogDescription>

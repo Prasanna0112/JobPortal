@@ -32,7 +32,13 @@ const Profile = () => {
         <div className="flex justify-between">
           <div className="flex items-center gap-4 ">
             <Avatar className="h-24 w-24">
-              <AvatarImage src={user?.profile?.profilePhoto} alt="profile" />
+              <AvatarImage
+                src={
+                  user?.profile?.profilePhoto ||
+                  "https://www.pngmart.com/files/23/Profile-PNG-Photo.png"
+                }
+                alt="profile"
+              />
             </Avatar>
             <div>
               <h1 className="font-medium text-xl">{user?.fullname}</h1>
@@ -73,13 +79,25 @@ const Profile = () => {
         </div>
         <div className="grid w-full max-w-sm items-center gap-1.5">
           <Label className="text-md font-bold">Resume</Label>
-          {isResume ? (
+          {user?.profile?.resume ? (
+            // <a
+            //   href={user?.profile?.resume.replace('/upload/', '/upload/fl_attachment:false/')}
+            //   target="_blank"
+            //   rel="noopener noreferrer"
+            //   className="text-blue-500 hover:underline cursor-pointer"
+            // >
+            //   {user?.profile?.resumeOriginalName || "View Resume"}
+            // </a>
             <a
-              href={user?.profile?.resume}
-              target="blank"
-              className="text-blue-500 hover:underline cursor-pointetr"
+              href={`https://docs.google.com/viewer?url=${encodeURIComponent(
+                user.profile.resume
+              )}&embedded=true`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-500 hover:underline cursor-pointer"
             >
-              {user?.profile?.resumeOriginalName}
+              {/* {user?.profile?.resumeOriginalName || "View Resume"} */}
+              View Resume
             </a>
           ) : (
             <span>NA</span>

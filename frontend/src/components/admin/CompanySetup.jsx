@@ -4,7 +4,7 @@ import { Button } from "../ui/button";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
-import { Form, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { COMPANY_API_END_POINT } from "@/utils/constant";
 import { toast } from "sonner";
 import { useSelector } from "react-redux";
@@ -42,7 +42,7 @@ const CompanySetup = () => {
     formData.append("description", input.description);
     formData.append("website", input.website);
     formData.append("location", input.location);
-    if (input.file) {
+    if (input.file && input.file instanceof File) {
       formData.append("file", input.file);
     }
     try {
@@ -75,7 +75,7 @@ const CompanySetup = () => {
       description:singleCompany.description || "",
       website:singleCompany.website || "",
       location:singleCompany.location || "",
-      file: singleCompany.file || null,
+      file: null,
     });
   },[singleCompany]);
 

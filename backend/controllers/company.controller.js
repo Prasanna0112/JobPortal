@@ -76,12 +76,14 @@ export const getCompanyById = async (req, res) => {
 export const updateCompany = async (req, res) => {
   try {
     const { name, description, website, location } = req.body;
-    const file = req.file;
-    const fileUri = getDataUri(file);
-    const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
-    const logo = cloudResponse.secure_url;
+    const updateData = { name, description, website, location };
 
-    const updateData = { name, description, website, location, logo };
+    // Only handle file upload if a file is provided
+    if (req.file && req.file.buffer) {
+      const fileUri = getDataUri(req.file); // returns a Data URI string
+      const cloudResponse = await cloudinary.uploader.upload(fileUri);
+      updateData.logo = cloudResponse.secure_url;
+    }
 
     const company = await Company.findByIdAndUpdate(
       req.params.id,
@@ -102,5 +104,6 @@ export const updateCompany = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
+    return res.status(500).json({ message: "Server error", success: false });
   }
-};
+};;
